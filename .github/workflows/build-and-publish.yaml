@@ -1,0 +1,48 @@
+name: Publish Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/build-and-publish.yaml'
+      - 'tsconfig.json'
+  workflow_dispatch:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js and Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Bump Version and Push Changes
+        uses: anothrNick/github-tag-action@v1.29.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: true
+          push_tag: true
+          push_main: true
+          version: patch
+          message: 'Bump version to v%VERSION%'
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Publish Package
+        uses: js-actions/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          access: public
