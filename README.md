@@ -1,35 +1,39 @@
 # Multidimensional Map
 
-![npm bundle size](https://img.shields.io/bundlephobia/min/multidimensional-map?style=flat-square)
-![NPM](https://img.shields.io/npm/l/multidimensional-map?style=flat-square)
-![npm](https://img.shields.io/npm/v/multidimensional-map?style=flat-square)
+![npm bundle size](https://img.shields.io/bundlephobia/min/@wpoynter/multidimensional-map?style=flat-square)
+![NPM](https://img.shields.io/npm/l/@wpoynter/multidimensional-map?style=flat-square)
+![npm](https://img.shields.io/npm/v/@wpoynter/multidimensional-map?style=flat-square)
 
-NPM: <https://www.npmjs.com/package/multidimensional-map>
+NPM: <https://www.npmjs.com/package/@wpoynter/multidimensional-map>
 
-## Summary 
+## Summary
+
 A multidimensional map allows multiple keys to be mapped to a numeric value, called a **measure** (e.g. "money", "volume"). Each of those keys will be part of a separate **dimension** (e.g. "age", "month", "gender").
 
-Each map can be subsetted into a new map given a filter (specifying direct matches or a range), and entries with the same key within a dimension can be combined (similar to marginalization in math).  The concept of key ordering for ranges is determined by insertion order. 
+Each map can be subsetted into a new map given a filter (specifying direct matches or a range), and entries with the same key within a dimension can be combined (similar to marginalization in math).  The concept of key ordering for ranges is determined by insertion order.
 
 This is primarily a write-once structure meant to manipulate data. This data structure was originally designed to work similarly to an [OLAP cube](https://en.wikipedia.org/wiki/OLAP_cube), but more lightweight with a subset of features.
 
 ## Getting Started
 
 ### Install
+
 ```bash
-npm install multidimensional-map
+npm install @wpoynter/multidimensional-map
 ```
 
 ### Usage
 
 #### Node
+
 ```javascript
-const { MultidimensionalMap } = require('multidimensional-map')
+const { MultidimensionalMap } = require('@wpoynter/multidimensional-map')
 ```
 
 #### Bundler
+
 ```javascript
-import { MultidimensionalMap } from 'multidimensional-map'
+import { MultidimensionalMap } from '@wpoynter/multidimensional-map'
 ```
 
 Imagine we have data of a morning fruit shop, open from 8am to 11am daily. The shop sells apples, oranges, and bananas. Below we get the data from two days of sales:
@@ -161,7 +165,7 @@ Creates a map with certain dimensions (entries may have more keys than needed). 
 
 #### `getSubset(query: Query, options?: SubsetOptions): MultidimensionalMap`
 
-  Creates a subset of the current entries using specified constraints. See [Usage](#Usage) for examples.
+  Creates a subset of the current entries using specified constraints. See [Usage](#usage) for examples.
 
 - `query[dimension]: (string | number) or object`
 
@@ -177,18 +181,19 @@ Creates a map with certain dimensions (entries may have more keys than needed). 
 
 - `options.keepOrder : string[] | boolean`
 
-  Given true, the subset will have the same order as the original map for all dimensions, even if the subset have no entries under certain items in a dimension. 
+  Given true, the subset will have the same order as the original map for all dimensions, even if the subset have no entries under certain items in a dimension.
 
-  To specify only certain dimensions to preserve ordering, pass a string array with dimension names. 
+  To specify only certain dimensions to preserve ordering, pass a string array with dimension names.
 
 #### `getSubsetArray(query: Query): EntryType[]`
 
   Similar to `getSubset`, but gives array back directly instead of inserting it into a new map (for less overhead).
 
 #### `combineEntries(measure: string | string[], dimensions?: string | string[], entries?: EntryT[])`
-  - `measure`: name of the key (or keys) to sum over.
-  - `dimensions?`: dimension name or names that determine how the measures are summed. Entries with the same key within those dimensions are combined into a single entry. The order the fields also specifies the nesting of the output object. If fields is empty or not given, it will sum up the measure over all entries.
-  - `entries?`: special override for which entries the function is run on, making it work similarly to a static function
+
+- `measure`: name of the key (or keys) to sum over.
+- `dimensions?`: dimension name or names that determine how the measures are summed. Entries with the same key within those dimensions are combined into a single entry. The order the fields also specifies the nesting of the output object. If fields is empty or not given, it will sum up the measure over all entries.
+- `entries?`: special override for which entries the function is run on, making it work similarly to a static function
 
 #### `length: number`
 
