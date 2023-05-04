@@ -79,12 +79,12 @@ class MultidimensionalMap<EntryT> {
   }
 
   getEntriesInRange(dimension: keyof EntryT, start: string | number | null, end: string | number | null): EntryT[] {
-    if (!this.dimensions.hasOwnProperty(dimension)) throw new Error(`Dimension "${dimension}" does not exist`) 
+    if (!this.dimensions.hasOwnProperty(dimension)) throw new Error(`Dimension "${String(dimension)}" does not exist`) 
     const targetDimension: OrderedMap<string | number, EntryT[]> = this.dimensions[dimension as string]
     const startIdx = start == null ? 0 : targetDimension.indexOf(start)
     const endIdx = end == null ? targetDimension.length - 1 : targetDimension.indexOf(end)
-    if (startIdx === -1) throw new Error(`Range start "${start}" does not exist in dimension "${dimension}"`)
-    if (endIdx === -1) throw new Error(`Range end "${end}" does not exist in dimension "${dimension}"`)
+    if (startIdx === -1) throw new Error(`Range start "${start}" does not exist in dimension "${String(dimension)}"`)
+    if (endIdx === -1) throw new Error(`Range end "${end}" does not exist in dimension "${String(dimension)}"`)
     const entryList: EntryT[] = []
     for (let i = startIdx; i <= endIdx; i++) {
       const entries = targetDimension.getAt(i)

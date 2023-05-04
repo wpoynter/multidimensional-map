@@ -4,7 +4,7 @@
     "target": "es2015",
     "declaration": true,
     "outDir": "./dist",
-    "lib": ["ES6", "ES2017.Object", "DOM"]
+    "lib": ["ES2016", "ES2017.Object", "DOM"]
   },
   "include": [
     "src/**/*"
