@@ -168,7 +168,7 @@ class MultidimensionalMap<EntryT> {
                 }
                 return this.dimensions[dimensionName].get(
                     dimensionItem as number | string
-                )
+                ) ?? []
             }
         )
         return getArrayIntersection(
