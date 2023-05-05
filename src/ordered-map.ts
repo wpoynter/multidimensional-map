@@ -1,82 +1,80 @@
 /* An OrderedMap represents a Map which allows array-style indexing over the keys
  * While the normal map keeps insertion order, this gives an easier way to access arbitrary indicies without using iterators */
 class OrderedMap<K, V> {
-  map: Map<K, V | null> = new Map()
-  order: K[] = []
+    map: Map<K, V | null> = new Map()
+    order: K[] = []
 
-  constructor(keyOrder: K[] = []) {
-    this.order = keyOrder
-    for (const key of keyOrder) {
-      this.map.set(key, null)
+    constructor(keyOrder: K[] = []) {
+        this.order = keyOrder
+        for (const key of keyOrder) {
+            this.map.set(key, null)
+        }
     }
-  }
 
-  append(key: K, value: V): void {
-    if (!this.map.has(key))
-      this.order.push(key)
-    this.map.set(key, value)
-  }
+    append(key: K, value: V): void {
+        if (!this.map.has(key)) this.order.push(key)
+        this.map.set(key, value)
+    }
 
-  prepend(key: K, value: V): void {
-    if (!this.map.has(key))
-      this.order.unshift(key)
-    this.map.set(key, value)
-  }
+    prepend(key: K, value: V): void {
+        if (!this.map.has(key)) this.order.unshift(key)
+        this.map.set(key, value)
+    }
 
-  has(key: K): boolean {
-    return this.map.has(key)
-  }
+    has(key: K): boolean {
+        return this.map.has(key)
+    }
 
-  get(key: K): V {
-    return this.map.get(key)
-  }
+    get(key: K): V {
+        return this.map.get(key)
+    }
 
-  getAt(index: number): V {
-    return this.map.get(this.order[index])
-  }
-  
-  getPairAt(index: number): [K, V] {
-    const mapKey = this.order[index]
-    return [mapKey, this.map.get(mapKey)]
-  }
+    getAt(index: number): V {
+        return this.map.get(this.order[index])
+    }
 
-  getKeyAt(index: number): K {
-    return this.order[index]
-  }
+    getPairAt(index: number): [K, V] {
+        const mapKey = this.order[index]
+        return [mapKey, this.map.get(mapKey)]
+    }
 
-  getKeys(): K[] {
-    return this.order
-  }
+    getKeyAt(index: number): K {
+        return this.order[index]
+    }
 
-  forEach(fn: (value: V, key: K, map: Map<K, V>) => void): void {
-    this.map.forEach(fn)
-  }
+    getKeys(): K[] {
+        return this.order
+    }
 
-  indexOf(key: K) {
-    return this.order.indexOf(key)
-  }
+    forEach(fn: (value: V, key: K, map: Map<K, V>) => void): void {
+        this.map.forEach(fn)
+    }
 
-  delete(key: K) {
-    const index = this.order.indexOf(key)
-    if (index === -1) return false;
-    this.order.splice(index, 1)
-    return this.map.delete(key)
-  }
+    indexOf(key: K) {
+        return this.order.indexOf(key)
+    }
 
-  deleteAt(index: number) {
-    const mapKey = this.order[index]
-    this.order.splice(index, 1)
-    return this.map.delete(mapKey)
-  }
+    delete(key: K) {
+        const index = this.order.indexOf(key)
+        if (index === -1) return false
+        this.order.splice(index, 1)
+        return this.map.delete(key)
+    }
 
-  clear(): void {
-    this.map.clear()
-    this.order = []
-  }
+    deleteAt(index: number) {
+        const mapKey = this.order[index]
+        this.order.splice(index, 1)
+        return this.map.delete(mapKey)
+    }
 
-  get length(): number {
-    return this.order.length
-  }
+    clear(): void {
+        this.map.clear()
+        this.order = []
+    }
+
+    get length(): number {
+        return this.order.length
+    }
 }
 
 export { OrderedMap }
